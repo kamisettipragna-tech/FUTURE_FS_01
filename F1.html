@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Your Name | Full Stack Developer Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { transition: background-color 0.3s ease, color 0.2s ease; }
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    // ==================== 📄 YOUR PERSONAL DETAILS ====================
+    // 🔧 EDIT THE OBJECT BELOW WITH YOUR REAL INFORMATION
+    
+    window.PORTFOLIO_DATA = {
+      "name": "Kamisetti Pragna Sri Sai Lakshmi",
+      "title": "Aspiring Full Stack Developer | BTech 2nd Year | Academic Topper",
+      "intro": "Building web applications from frontend to backend. 2nd year BTech student with 9.1 CGPA (Academic Topper), multiple internships, certifications, and hackathon finalist.",
+      "bio": "I'm a 2nd year BTech student who loves building web applications from scratch. I'm the academic topper of my 3rd semester with 9.1 CGPA. I've completed virtual internships and currently doing a Full Stack Development internship at Future Interns. I hold certifications in Java Programming from IIT Kharagpur (Elite Gold Badge) and Coursera.",
+      "education": "BTech in Computer Science - [Your College Name] | 2nd Year (2026 Batch)",
+      "cgpa": "9.1/10 (till 3rd semester) - Academic Topper",
+      "skills": ["HTML", "CSS", "JavaScript", "React.js", "Node.js", "Express.js", "MongoDB", "Java", "SQL", "AWS Cloud", "Git", "Tailwind CSS"],
+      "certifications": [
+        {
+          "name": "Joy of Computing using  Python ",
+          "issuer": "IIT Madras (NPTEL)",
+          "badge": "Silver Badge (Elite)",
+          "description": "**The Joy of Computing using Python is an NPTEL course that teaches programming fundamentals in a fun, engaging way through creative examples and real-world applications.**"
+        },
+        {
+          "name": "Quantum Computing",
+          "issuer": "Qubitech",
+          "badge": "Certified",
+          "description": "Core Java fundamentals including syntax, control flow, arrays, and object-oriented programming."
+        },
+        {
+          "name": "AI Skill Passport",
+          "issuer": "EY",
+          "badge": "Certified",
+          "description":"EY's AI Skill Passport is a certification program that validates foundational and practical AI knowledge, including ethics, tools, and business applications, for professionals."
+        }
+      ],
+      "achievements": {
+        "academic": {
+          "title": "Academic Topper - 3rd Semester",
+          "description": "Achieved the highest CGPA (9.1/10) in the 3rd semester, ranking 1st in the class."
+        },
+        "hackathons": [
+          {
+            "name": "Anveshana 2K26",
+            "venue": "Sasi Engineering College",
+            "duration": "24 Hours National Hackathon",
+            "position": "4th Place",
+            "description": "Built an innovative solution addressing real-world problems in a 24-hour national-level hackathon."
+          },
+          {
+            "name": "Google Solution Challenge",
+            "venue": "Ongoing",
+            "duration": "Current Participant",
+            "position": "Participant",
+            "description": "Developing a solution aligned with UN Sustainable Development Goals."
+          }
+        ]
+      },
+      "internships": {
+        "current": {
+          "title": "Full Stack Web Development Intern",
+          "company": "Future Interns",
+          "duration": "Present",
+          "description": "Building full-stack web applications using MERN stack, collaborating on real-world projects, implementing responsive designs and RESTful APIs."
+        },
+        "completed": [
+          {
+            "title": "Python Full Stack Developer",
+            "company": "Eduskills Academy",
+            "type": "Virtual Internship",
+            "description": "Completed comprehensive training in Python full stack development including Spring Boot, Hibernate, and frontend technologies."
+          },
+          {
+            "title": "Andriod Developer Virtual Internship ",
+            "company": "Eduskills Academy",
+            "type": "Virtual Internship",
+            "description":"A remote learning program offering practical Android development experience (Kotlin, Jetpack Compose) and a certificate upon completion."
+          },
+          {
+            "title": "AI-ML Virtual Internship",
+            "company": "Eduskills Academy",
+            "type": "Virtual Internship",
+            "description": "Worked on ethical AI practices,responsible data usage and fairness in machine learning system."
+          }
+        ]
+      },
+      "projects": [
+        {
+          "title": "Unbiased AI Detection",
+          "description": "An AI-powered system that detects and mitigates bias in machine learning models. The project focuses on identifying algorithmic bias in datasets and providing fairness recommendations for ethical AI deployment.",
+          "tech": ["Python", "TensorFlow", "Scikit-learn", "Pandas", "NumPy", "React.js"],
+          "status": "Currently Working On"
+        },
+        {
+          "title": "Globe Lens",
+          "description": "A smart web application that helps users discover and explore places around the world. Features location-based search, interactive maps, and detailed information about landmarks, restaurants, and attractions.",
+          "tech": ["React", "Leaflet/Google Maps API", "Node.js", "Express", "MongoDB"]
+        },
+        {
+          "title": "Portfolio Website",
+          "description": "A responsive portfolio website showcasing my projects and skills. Features dark mode, contact form, and resume upload functionality.",
+          "tech": ["React", "Tailwind CSS", "LocalStorage"]
+        }
+      ],
+      "socials": {
+        "github": "https://github.com/yourusername",
+        "linkedin": "https://linkedin.com/in/yourusername",
+        "twitter": "https://twitter.com/yourusername",
+        "email": "your.email@example.com"
+      },
+      "resumeLink": null
+    };
+    
+    // Load saved resume from localStorage if exists (for permanent storage)
+    const savedResume = localStorage.getItem('user_resume_data');
+    if (savedResume) {
+      const resumeData = JSON.parse(savedResume);
+      if (resumeData.fileData) {
+        const blob = dataURItoBlob(resumeData.fileData);
+        const tempUrl = URL.createObjectURL(blob);
+        window.PORTFOLIO_DATA.resumeLink = tempUrl;
+      }
+    }
+    
+    function dataURItoBlob(dataURI) {
+      const byteString = atob(dataURI.split(',')[1]);
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: mimeString });
+    }
+  </script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Dark Mode Context
+    const ThemeContext = React.createContext();
+    const ThemeProvider = ({ children }) => {
+      const [darkMode, setDarkMode] = useState(() => {
+        const saved = localStorage.getItem('theme');
+        return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      });
+
+      useEffect(() => {
+        if (darkMode) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        }
+      }, [darkMode]);
+
+      return (
+        <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
+          {children}
+        </ThemeContext.Provider>
+      );
+    };
+    const useTheme = () => React.useContext(ThemeContext);
+
+    const ResumeUpload = ({ currentResumeUrl, onResumeUpdate }) => {
+      const [uploadStatus, setUploadStatus] = useState('');
+      const [savedFileName, setSavedFileName] = useState('');
+      
+      useEffect(() => {
+        const savedResume = localStorage.getItem('user_resume_data');
+        if (savedResume) {
+          const resumeData = JSON.parse(savedResume);
+          if (resumeData.fileName) {
+            setSavedFileName(resumeData.fileName);
+          }
+        }
+      }, []);
+      
+      const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        if (!validTypes.includes(file.type)) {
+          alert('Please upload a PDF, DOC, or DOCX file');
+          return;
+        }
+        
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File size should be less than 5MB');
+          return;
+        }
+        
+        setUploadStatus('loading');
+        
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result;
+          const resumeData = {
+            fileData: base64String,
+            fileName: file.name,
+            fileType: file.type,
+            uploadDate: new Date().toISOString()
+          };
+          localStorage.setItem('user_resume_data', JSON.stringify(resumeData));
+          setSavedFileName(file.name);
+          setUploadStatus('success');
+          const tempUrl = URL.createObjectURL(file);
+          onResumeUpdate(tempUrl);
+          setTimeout(() => setUploadStatus(''), 3000);
+        };
+        reader.readAsDataURL(file);
+      };
+      
+      const handleDownload = () => {
+        const savedResume = localStorage.getItem('user_resume_data');
+        if (savedResume) {
+          const resumeData = JSON.parse(savedResume);
+          if (resumeData.fileData) {
+            const link = document.createElement('a');
+            link.href = resumeData.fileData;
+            link.download = resumeData.fileName || 'resume';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+        }
+      };
+      
+      const handleDelete = () => {
+        if (confirm('Are you sure you want to delete your saved resume?')) {
+          localStorage.removeItem('user_resume_data');
+          setSavedFileName('');
+          onResumeUpdate(null);
+          setUploadStatus('deleted');
+          setTimeout(() => setUploadStatus(''), 3000);
+        }
+      };
+      
+      return (
+        <div className="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                📄 Upload Your Resume (PDF/DOC) - Saved Permanently
+              </label>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                onChange={handleFileUpload}
+                className="block w-full text-sm text-gray-500 dark:text-gray-400
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-lg file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-blue-50 file:text-blue-700
+                  dark:file:bg-blue-900 dark:file:text-blue-200
+                  hover:file:bg-blue-100"
+              />
+              {savedFileName && (
+                <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                  ✅ Saved: {savedFileName}
+                </p>
+              )}
+            </div>
+            <div className="flex gap-2">
+              {savedFileName && (
+                <>
+                  <button
+                    onClick={handleDownload}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 shadow-sm"
+                  >
+                    <i className="fas fa-download"></i> Download
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 shadow-sm"
+                  >
+                    <i className="fas fa-trash"></i> Delete
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+          {uploadStatus === 'loading' && <p className="text-blue-600 dark:text-blue-400 text-sm mt-2">⏳ Processing...</p>}
+          {uploadStatus === 'success' && <p className="text-green-600 dark:text-green-400 text-sm mt-2">✅ Resume saved permanently!</p>}
+          {uploadStatus === 'deleted' && <p className="text-red-600 dark:text-red-400 text-sm mt-2">🗑️ Resume deleted.</p>}
+        </div>
+      );
+    };
+
+    const ProjectCard = ({ project }) => {
+      return (
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover border border-gray-100 dark:border-gray-700 transition-all duration-300">
+          <div className="p-6">
+            <div className="flex justify-between items-start mb-2">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">{project.title}</h3>
+              {project.status && (
+                <span className="px-2 py-1 text-xs font-semibold bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full">
+                  🚧 {project.status}
+                </span>
+              )}
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">{project.description}</p>
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((tech, idx) => (
+                <span key={idx} className="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md">{tech}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const SkillBadge = ({ skill }) => (
+      <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium border border-gray-200 dark:border-gray-600">{skill}</span>
+    );
+
+    const HomePage = ({ data, onResumeUpdate }) => {
+      const { darkMode } = useTheme();
+      const [showUploader, setShowUploader] = useState(false);
+      
+      return (
+        <section className="min-h-[85vh] flex flex-col justify-center items-center text-center px-4 py-20">
+          <div className="animate-fade-in-up max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-extrabold text-blue-600 dark:text-blue-400 mb-4">
+              {data.name}
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4">{data.title}</p>
+            <div className="flex justify-center gap-2 mb-6">
+              <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full">9.1 CGPA</span>
+              <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full">IIT Madras Certified</span>
+              <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm rounded-full">Hackathon Finalist</span>
+            </div>
+            <p className="max-w-2xl text-gray-600 dark:text-gray-400 text-lg mb-10 mx-auto">{data.intro}</p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <a href="#projects" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition shadow-md hover:shadow-lg">View Projects</a>
+              <a href="#internships" className="px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">View Internships</a>
+              <a href="#achievements" className="px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">Achievements</a>
+              <a href="#certifications" className="px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 transition">Certifications</a>
+              
+              {data.resumeLink ? (
+                <a href={data.resumeLink} download="resume" className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition shadow-md flex items-center gap-2">
+                  <i className="fas fa-download"></i> Resume
+                </a>
+              ) : (
+                <button onClick={() => setShowUploader(true)} className="px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg font-medium hover:bg-blue-50 transition flex items-center gap-2">
+                  <i className="fas fa-upload"></i> Upload Resume
+                </button>
+              )}
+            </div>
+            {showUploader && (
+              <div className="mt-8">
+                <ResumeUpload currentResumeUrl={data.resumeLink} onResumeUpdate={onResumeUpdate} />
+                <button onClick={() => setShowUploader(false)} className="mt-2 text-sm text-gray-500 hover:text-gray-700">Close</button>
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    };
+
+    const AboutPage = ({ data }) => {
+      return (
+        <section className="px-4 py-16 max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-8 text-center">About Me</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 border border-gray-100 dark:border-gray-700">
+            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-6">{data.bio}</p>
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">🎓 Education</h3>
+              <p className="text-gray-600 dark:text-gray-400">{data.education}</p>
+              {data.cgpa && (
+                <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <p className="text-gray-700 dark:text-gray-300"><span className="font-semibold">📊 CGPA:</span> {data.cgpa}</p>
+                </div>
+              )}
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">🛠️ Technical Skills</h3>
+              <div className="flex flex-wrap gap-2">
+                {data.skills.map((skill, idx) => <SkillBadge key={idx} skill={skill} />)}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const CertificationsPage = ({ certifications }) => {
+      return (
+        <section className="px-4 py-16 max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-12 text-center">📜 Certifications</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {certifications.map((cert, idx) => (
+              <div key={idx} className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover border border-gray-100 dark:border-gray-700">
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    {cert.name.includes("Java") && <span className="text-2xl">☕</span>}
+                    {cert.name.includes("HTML") && <span className="text-2xl">🌐</span>}
+                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${cert.badge === "Silver Badge (Elite)" ? "bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300" : "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300"}`}>
+                      {cert.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-1">{cert.name}</h3>
+                  <p className="text-blue-600 dark:text-blue-400 text-sm mb-2">{cert.issuer}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{cert.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    };
+
+    const AchievementsPage = ({ achievements }) => {
+      return (
+        <section className="px-4 py-16 max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-12 text-center">🏆 Achievements</h2>
+          {achievements && achievements.academic && (
+            <div className="mb-10">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800 text-center">
+                <div className="inline-block p-3 bg-blue-100 dark:bg-blue-900/50 rounded-full mb-4"><span className="text-3xl">🏅</span></div>
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{achievements.academic.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{achievements.academic.description}</p>
+              </div>
+            </div>
+          )}
+          {achievements && achievements.hackathons && achievements.hackathons.length > 0 && (
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6 text-center">🚀 Hackathons</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {achievements.hackathons.map((hackathon, idx) => (
+                  <div key={idx} className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover border border-gray-100 dark:border-gray-700">
+                    <div className="p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-full">{hackathon.duration}</span>
+                        {hackathon.position === "4th Place" && <span className="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-xs font-semibold rounded-full">🏆 {hackathon.position}</span>}
+                        {hackathon.position === "Participant" && <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-full">🔄 Ongoing</span>}
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-1">{hackathon.name}</h3>
+                      <p className="text-blue-600 dark:text-blue-400 text-sm mb-2">{hackathon.venue}</p>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">{hackathon.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      );
+    };
+
+    const InternshipsPage = ({ internships }) => {
+      return (
+        <section className="px-4 py-16 max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-12 text-center">💼 Internships</h2>
+          {internships && internships.current && (
+            <div className="mb-10">
+              <div className="flex items-center gap-2 mb-4"><span className="px-2 py-1 bg-green-600 text-white text-xs font-semibold rounded-full">CURRENT</span></div>
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{internships.current.title}</h3>
+                <p className="text-blue-600 dark:text-blue-400 text-lg mb-3">{internships.current.company}</p>
+                <p className="text-gray-600 dark:text-gray-300">{internships.current.description}</p>
+              </div>
+            </div>
+          )}
+          {internships && internships.completed && internships.completed.length > 0 && (
+            <div>
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6 text-center">Completed Virtual Internships</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {internships.completed.map((internship, idx) => (
+                  <div key={idx} className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden card-hover border border-gray-100 dark:border-gray-700">
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        {internship.title.includes("Java") && <span className="text-2xl">☕</span>}
+                        {internship.title.includes("Cloud") && <span className="text-2xl">☁️</span>}
+                        {internship.title.includes("SQL") && <span className="text-2xl">🗄️</span>}
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-1">{internship.title}</h3>
+                      <p className="text-blue-600 dark:text-blue-400 text-sm mb-2">{internship.company}</p>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">{internship.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      );
+    };
+
+    const ProjectsPage = ({ projects }) => {
+      return (
+        <section className="px-4 py-16 max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-12 text-center">Featured Projects</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {projects.map((project, idx) => <ProjectCard key={idx} project={project} />)}
+          </div>
+        </section>
+      );
+    };
+
+    const ContactPage = () => {
+      const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+      const [status, setStatus] = useState({ type: '', message: '' });
+      const [loading, setLoading] = useState(false);
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+          await new Promise(resolve => setTimeout(resolve, 800));
+          const messages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+          messages.push({ ...formData, timestamp: new Date().toISOString() });
+          localStorage.setItem('contact_messages', JSON.stringify(messages));
+          setStatus({ type: 'success', message: 'Message sent! I will get back to you soon.' });
+          setFormData({ name: '', email: '', message: '' });
+        } catch (err) {
+          setStatus({ type: 'error', message: 'Something went wrong.' });
+        } finally { setLoading(false); }
+      };
+
+      return (
+        <section className="px-4 py-16 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-8 text-center">Get In Touch</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-8 border border-gray-100 dark:border-gray-700">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div><label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Your Name</label><input type="text" name="name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white" /></div>
+              <div><label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Email</label><input type="email" name="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white" /></div>
+              <div><label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Message</label><textarea name="message" rows="5" value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} required className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea></div>
+              {status.message && <div className={`p-3 rounded-lg ${status.type === 'success' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'}`}>{status.message}</div>}
+              <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition shadow-md">{loading ? 'Sending...' : 'Send Message'}</button>
+            </form>
+            <div className="mt-6 text-center text-gray-500 dark:text-gray-400 text-sm">Or reach me at <a href={`mailto:${window.PORTFOLIO_DATA.socials.email}`} className="text-blue-600 dark:text-blue-400">{window.PORTFOLIO_DATA.socials.email}</a></div>
+          </div>
+        </section>
+      );
+    };
+
+    const Navbar = () => {
+      const { darkMode, setDarkMode } = useTheme();
+      const [active, setActive] = useState('home');
+      const scrollToSection = (sectionId) => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+        setActive(sectionId);
+      };
+
+      return (
+        <nav className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div></div>
+              <div className="hidden md:flex space-x-8">
+                {['home', 'about', 'certifications', 'achievements', 'internships', 'projects', 'contact'].map((item) => (
+                  <button key={item} onClick={() => scrollToSection(item)} className={`capitalize font-medium transition ${active === item ? 'text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300 hover:text-blue-500'}`}>{item}</button>
+                ))}
+              </div>
+              <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">{darkMode ? <i className="fas fa-sun text-yellow-400"></i> : <i className="fas fa-moon"></i>}</button>
+            </div>
+          </div>
+        </nav>
+      );
+    };
+
+    const Footer = ({ socials }) => (
+      <footer className="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 mt-16">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className="flex justify-center space-x-6 mb-4">
+            {socials.github && <a href={socials.github} target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 text-xl"><i className="fab fa-github"></i></a>}
+            {socials.linkedin && <a href={socials.linkedin} target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 text-xl"><i className="fab fa-linkedin"></i></a>}
+            {socials.twitter && <a href={socials.twitter} target="_blank" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 text-xl"><i className="fab fa-twitter"></i></a>}
+            {socials.email && <a href={`mailto:${socials.email}`} className="text-gray-600 dark:text-gray-400 hover:text-blue-600 text-xl"><i className="fas fa-envelope"></i></a>}
+          </div>
+          <p className="text-gray-500 dark:text-gray-500 text-sm">© {new Date().getFullYear()} {window.PORTFOLIO_DATA.name}. All rights reserved.</p>
+        </div>
+      </footer>
+    );
+
+    const MainContent = ({ portfolio, onResumeUpdate }) => (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+        <Navbar />
+        <main>
+          <section id="home"><HomePage data={portfolio} onResumeUpdate={onResumeUpdate} /></section>
+          <section id="about"><AboutPage data={portfolio} /></section>
+          <section id="certifications"><CertificationsPage certifications={portfolio.certifications} /></section>
+          <section id="achievements"><AchievementsPage achievements={portfolio.achievements} /></section>
+          <section id="internships"><InternshipsPage internships={portfolio.internships} /></section>
+          <section id="projects"><ProjectsPage projects={portfolio.projects} /></section>
+          <section id="contact"><ContactPage /></section>
+        </main>
+        <Footer socials={portfolio.socials} />
+      </div>
+    );
+
+    const App = () => {
+      const [portfolio, setPortfolio] = useState(null);
+      useEffect(() => setPortfolio(window.PORTFOLIO_DATA), []);
+      const handleResumeUpdate = (newUrl) => setPortfolio(prev => ({ ...prev, resumeLink: newUrl }));
+      if (!portfolio) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+      return <ThemeProvider><MainContent portfolio={portfolio} onResumeUpdate={handleResumeUpdate} /></ThemeProvider>;
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+    .dark { color-scheme: dark; }
+  </style>
+</body>
+</html>
